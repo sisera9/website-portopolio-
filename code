@@ -1,0 +1,576 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Sisera Portfolio</title>
+  <style>
+    /* Reset & base */
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+
+    body {
+      display: flex;
+      height: 100vh;
+      background: #fff;
+      color: #333;
+      user-select: none;
+    }
+
+    /* Sidebar */
+    .sidebar {
+      width: 280px;
+      background-color: #f5f7fa;
+      border-right: 1px solid #ddd;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 2rem 1rem 2rem 1rem;
+      gap: 2rem;
+    }
+
+    .sidebar .profile-pic {
+      width: 120px;
+      height: 120px;
+      border-radius: 50%;
+      overflow: hidden;
+      border: 3px solid #b7c8de;
+      box-shadow: 0 4px 6px rgba(0,0,0,0.07);
+      flex-shrink: 0;
+    }
+
+    .sidebar .profile-pic img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    .sidebar h1 {
+      font-size: 1.4rem;
+      font-weight: 700;
+      color: #222;
+      user-select: text;
+    }
+
+    .sidebar .subtitle {
+      font-size: 0.85rem;
+      color: #7a9fd7;
+      margin-bottom: 1.5rem;
+      font-weight: 600;
+      user-select: text;
+    }
+
+    /* Navigation Menu */
+    nav {
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      gap: 0.8rem;
+      text-align: center;
+      font-size: 0.78rem;
+      font-weight: 600;
+      letter-spacing: 1px;
+    }
+
+    nav a {
+      color: #444;
+      text-decoration: none;
+      padding: 0.35rem 0;
+      display: block;
+      border-radius: 3px;
+      transition: color 0.3s ease, background-color 0.3s ease;
+      cursor: pointer;
+      user-select: none;
+    }
+
+    nav a:hover,
+    nav a.active {
+      color: #4a90e2;
+      background-color: rgba(74, 144, 226, 0.1);
+    }
+
+    /* Footer copyright */
+    .sidebar .footer-text {
+      font-size: 0.72rem;
+      color: #999;
+      margin-top: auto;
+      line-height: 1.3;
+      user-select: text;
+    }
+
+    .sidebar .footer-text a {
+      color: #7a9fd7;
+      text-decoration: none;
+      font-weight: 600;
+    }
+
+    .sidebar .footer-text a:hover {
+      text-decoration: underline;
+    }
+
+    /* Main content styling */
+    main {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      padding: 4rem 3rem;
+      position: relative;
+      overflow-y: auto;
+      scroll-behavior: smooth;
+      background-color: #fff;
+    }
+
+    /* Hero section at top */
+    .hero {
+      display: flex;
+      gap: 4rem;
+      align-items: center;
+      max-width: 1100px;
+      margin-bottom: 3rem;
+      flex-wrap: wrap;
+    }
+
+    .hero-text {
+      flex: 1 1 350px;
+      max-width: 500px;
+    }
+
+    .hero-text h2 {
+      font-size: 2.5rem;
+      font-weight: 900;
+      line-height: 1.2;
+      user-select: text;
+      color: #111;
+    }
+
+    .hero-text p {
+      margin-top: 1rem;
+      color: #555;
+      font-size: 1rem;
+      user-select: text;
+      max-width: 85%;
+      line-height: 1.5;
+    }
+
+    .hero-text p a {
+      color: #4a90e2;
+      text-decoration: none;
+      font-weight: 700;
+    }
+
+    .hero-text p a:hover {
+      text-decoration: underline;
+    }
+
+    .btn-portfolio {
+      margin-top: 1.8rem;
+      padding: 0.65rem 1.5rem;
+      border: 1px solid #333;
+      background-color: transparent;
+      color: #111;
+      font-size: 0.85rem;
+      font-weight: 700;
+      letter-spacing: 1.5px;
+      border-radius: 3px;
+      cursor: pointer;
+      transition: background-color 0.35s ease, color 0.35s ease;
+      user-select: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      text-transform: uppercase;
+    }
+
+    .btn-portfolio:hover {
+      background-color: #333;
+      color: white;
+      border-color: #333;
+    }
+
+    /* Icon next to button text */
+    .btn-portfolio svg {
+      width: 18px;
+      height: 18px;
+      fill: currentColor;
+    }
+
+    /* Hero image */
+    .hero-image {
+      flex: 1 1 350px;
+      max-width: 440px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .hero-image img {
+      width: 100%;
+      height: auto;
+      object-fit: contain;
+      user-select: none;
+      filter: grayscale(100%);
+      border-radius: 4px;
+      box-shadow: 0 10px 40px rgba(0,0,0,0.1);
+      pointer-events: none;
+      max-height: 400px;
+    }
+
+    /* Sections for Profile, Kaligrafi, Experience, Contact, Feedback */
+    section {
+      max-width: 900px;
+      margin-bottom: 2rem;
+      user-select: text;
+    }
+
+    section h3 {
+      font-size: 1.8rem;
+      font-weight: 700;
+      margin-bottom: 1rem;
+      border-bottom: 2px solid #4a90e2;
+      display: inline-block;
+      padding-bottom: 0.3rem;
+      color: #222;
+    }
+
+    section p, section ul {
+      font-size: 1rem;
+      color: #444;
+      line-height: 1.5;
+    }
+
+    section ul {
+      list-style: disc;
+      padding-left: 1.5rem;
+    }
+
+    /* Contact info */
+    .contact-info {
+      font-size: 1rem;
+      color: #444;
+      line-height: 1.6;
+    }
+
+    /* Feedback form */
+    .feedback-form {
+      max-width: 600px;
+      margin-top: 1rem;
+    }
+
+    .feedback-form label {
+      display: block;
+      font-weight: 600;
+      margin-bottom: 0.3rem;
+      color: #333;
+    }
+
+    .feedback-form input,
+    .feedback-form textarea {
+      width: 100%;
+      padding: 0.6rem 0.85rem;
+      margin-bottom: 1.2rem;
+      font-size: 1rem;
+      border: 1.5px solid #ccc;
+      border-radius: 4px;
+      transition: border-color 0.3s ease;
+      font-family: inherit;
+      resize: vertical;
+    }
+
+    .feedback-form input:focus,
+    .feedback-form textarea:focus {
+      border-color: #4a90e2;
+      outline: none;
+    }
+
+    .feedback-form button {
+      background-color: #4a90e2;
+      color: white;
+      padding: 0.75rem 1.8rem;
+      font-weight: 700;
+      font-size: 1rem;
+      border: none;
+      border-radius: 3px;
+      cursor: pointer;
+      user-select: none;
+      transition: background-color 0.3s ease;
+      letter-spacing: 1px;
+    }
+
+    .feedback-form button:hover {
+      background-color: #3675c3;
+    }
+
+    /* Scrollbar styling for main scroll */
+    main::-webkit-scrollbar {
+      width: 9px;
+    }
+    main::-webkit-scrollbar-thumb {
+      background-color: #b7c8de;
+      border-radius: 8px;
+    }
+    main::-webkit-scrollbar-track {
+      background-color: #f5f7fa;
+    }
+
+    /* Responsive adaptations */
+    @media (max-width: 900px) {
+      body {
+        flex-direction: column;
+        height: auto;
+      }
+      .sidebar {
+        width: 100%;
+        flex-direction: row;
+        justify-content: space-around;
+        padding: 1rem 0.5rem;
+        border-right: none;
+        border-bottom: 1px solid #ddd;
+      }
+      .sidebar .profile-pic {
+        display: none;
+      }
+      nav {
+        flex-direction: row;
+        gap: 1.2rem;
+        font-size: 0.75rem;
+      }
+      main {
+        padding: 2rem 1.5rem;
+        height: auto;
+      }
+      .hero {
+        flex-direction: column;
+        text-align: center;
+        gap: 1.5rem;
+      }
+      .hero-text {
+        max-width: 100%;
+      }
+      .hero-image {
+        max-width: 80vw;
+        margin: 0 auto;
+      }
+    }
+  </style>
+</head>
+<body>
+  <aside class="sidebar" aria-label="Sidebar menu and profile">
+    <div class="profile-pic" aria-label="Profile picture">
+      <img
+        src="images/WhatsApp Image 2025-07-10 at 20.14.40.jpeg"
+        alt="Portrait of Sisera in formal attire with a gentle smile on a neutral light background"
+        onerror="this.onerror=null;this.src='https://placehold.co/120x120?text=Image+Unavailable';"
+      />
+    </div>
+    <h1>Sisera</h1>
+    <div class="subtitle" aria-label="Brief description">Kaligrafi Artist & Designer</div>
+    <nav role="navigation" aria-label="Primary menu">
+      <a href="#profile" class="active" aria-current="page">Profil</a>
+      <a href="#kaligrafi">Karya Kaligrafi</a>
+      <a href="#experience">Pengalaman</a>
+      <a href="#contact">Informasi Kontak</a>
+      <a href="#feedback">Masukan & Kritikan</a>
+    </nav>
+    <div class="footer-text" aria-label="Copyright and credits">
+      © 2024 Sisera Portfolio<br />
+      Template inspired by <a href="https://colorlib.com" target="_blank" rel="noopener noreferrer">Colorlib</a><br />
+      Images via <a href="https://unsplash.com" target="_blank" rel="noopener noreferrer">Unsplash</a>
+    </div>
+  </aside>
+  <main>
+    <section class="hero" aria-label="Introduction to Sisera and portfolio overview">
+      <article class="hero-text">
+        <h2>I am a Kaligrafi Artist</h2>
+        <p>
+          Showcase of <strong>kaligrafi skills</strong> to attract potential clients or collaborators.<br />
+          Designed & built with HTML, CSS, and JavaScript.<br />
+          See more templates by <a href="https://colorlib.com" target="_blank" rel="noopener noreferrer">colorlib.com</a>.
+        </p>
+        <button type="button" class="btn-portfolio" aria-label="View Kaligrafi portfolio">
+          View Portfolio
+          <svg aria-hidden="true" focusable="false" viewBox="0 0 24 24">
+            <path d="M14 2v2h3.59L7 14.59 8.41 16 19 5.41V9h2V2z"></path>
+            <path d="M5 18h14v2H5z"></path>
+          </svg>
+        </button>
+      </article>
+      <figure class="hero-image">
+        <img
+          src="images/WhatsApp Image 2025-07-10 at 20.14.40 (1).jpeg"
+          alt="Side profile of a young artist wearing a contemporary black coat looking down thoughtfully on white background" 
+          onerror="this.onerror=null;this.src='https://placehold.co/440x440?text=Image+Unavailable';"
+        />
+      </figure>
+    </section>
+
+    <!-- Profile Section -->
+    <section id="profile" tabindex="-1" aria-label="Profile of Sisera">
+      <h3>Profil</h3>
+      <p>
+       Assalamuaikum wr wb.
+       Hai! salam kenal semuanya 
+       Perkenalkan, saya Sisera. saya adalah seorang pecinta seni, khususnya seni kaligrafi Islam. Kaligrafi menjadi jalan bagi saya untuk mengekspresikan rasa cinta kepada Allah dan menyebarkan nilai-nilai Islam melalui keindahan huruf-huruf Al-Qur’an.
+       Meskipun saya masih dalam tahap belajar, saya bertekad untuk terus mengembangkan kemampuan ini. Saya berharap, karya-karya saya bukan hanya menjadi hobi, tetapi juga menjadi sarana dakwah yang menyentuh hati, menyebarkan keindahan Islam kepada siapa saja yang melihatnya.
+       Semoga setiap goresan yang saya torehkan menjadi bagian dari amal kebaikan yang diberkahi oleh-Nya. Aamiin.
+    </p>
+    </section>
+
+    <!-- Kaligrafi Works Section -->
+    <section id="kaligrafi" tabindex="-1" aria-label="Kaligrafi works by Sisera">
+      <h3>Karya Kaligrafi</h3>
+      <p>Berikut adalah beberapa contoh karya kaligrafi yang telah saya buat:</p>
+      <ul>
+        <li>Kaligrafi mushaf</li>
+        <li>Desain logo dan branding berbasis kaligrafi</li>
+        <li>Karya seni dinding kaligrafi dengan berbagai teknik tinta dan cat</li>
+        <li>Kaligrafi digital untuk media sosial</li>
+      </ul>
+    </section>
+
+    <!-- Experience Section -->
+    <section id="experience" tabindex="-1" aria-label="Experience of Sisera">
+      <h3>Pengalaman</h3>
+      <ul>
+        <li>juara 1 kaligrafi putri pada acara maulid nabi tahun 2023</li>
+        <li>Harapan 2 kaligrafi pentas PAIS pada tahun 2023</li>
+        <li>Juara 1 kaligrafi putri pada hari santri pada tahun 2024</li>
+        <li>Juara 1 kaligrafi tingkat kelurahan pada tahun 2024</li>
+        <li>Juara 2 kaligrafi golongan mushaf tingkat kecamatan tahun 2024</li>
+        <li>Harapan 1 cabang kaligrafi hias mushaf putri pada MTQ ke XXXI tingkat kota tahun 2024 </li>
+      </ul>
+    </section>
+
+    <!-- Contact Info Section -->
+    <section id="contact" tabindex="-1" aria-label="Contact information for Sisera">
+      <h3>Informasi Kontak</h3>
+      <div class="contact-info">
+        <p>Email: <a href="mailto:sitiserliaviva@gmail.com">sitiserliaviva@gmail.com</a></p>
+        <p>Instagram: <a href="https://www.instagram.com/baytqalam.sisera" target="_blank" rel="noopener noreferrer">@baytqalam.sisera</a></p>
+        <p>Lokasi: Probolinggo, Indonesia</p>
+      </div>
+    </section>
+
+    <!-- Feedback / Kritik Section -->
+    <section id="feedback" tabindex="-1" aria-label="Feedback and criticism form">
+      <h3>Masukan &amp; Kritikan</h3>
+      <p>Silakan isi formulir di bawah ini untuk mengirim masukan atau kritikan yang akan otomatis terkirim ke email saya.</p>
+      <form id="feedback-form" class="feedback-form" aria-live="polite" aria-relevant="additions" novalidate>
+        <label for="name">Nama</label>
+        <input type="text" id="name" name="name" placeholder="Nama Anda" required aria-required="true" />
+
+        <label for="email">Email</label>
+        <input type="email" id="email" name="email" placeholder="Email Anda" required aria-required="true" />
+
+        <label for="message">Pesan</label>
+        <textarea id="message" name="message" rows="5" placeholder="Ketik masukan atau kritikan Anda di sini..." required aria-required="true"></textarea>
+
+        <button type="submit">Kirim Masukan</button>
+      </form>
+      <div id="form-status" role="alert" aria-live="assertive" style="margin-top: 1rem; color:#4a90e2; font-weight: 600;"></div>
+    </section>
+  </main>
+  <script>
+    // Handle menu active states and scrolling
+    const navLinks = document.querySelectorAll('nav a');
+    const sections = Array.from(navLinks).map(link => document.querySelector(link.getAttribute('href')));
+
+    function setActiveMenu() {
+      let index = sections.length - 1;
+      for(let i = 0; i < sections.length; i++) {
+        if(window.scrollY + 150 < sections[i].offsetTop) {
+          index = i - 1;
+          break;
+        }
+      }
+      navLinks.forEach(link => link.classList.remove('active'));
+      if(index >= 0) navLinks[index].classList.add('active');
+    }
+    window.addEventListener('scroll', setActiveMenu);
+    setActiveMenu();
+
+    // Navigation click smooth scroll + focus and aria-current update
+    navLinks.forEach(link => {
+      link.addEventListener('click', (e) => {
+        e.preventDefault();
+        const target = document.querySelector(link.getAttribute('href'));
+        target.focus();
+        window.scrollTo({
+          top: target.offsetTop - 20,
+          behavior: 'smooth'
+        });
+        // Update aria-current states
+        navLinks.forEach(l => l.classList.remove('active'));
+        link.classList.add('active');
+      });
+    });
+
+    // Portfolio button scroll to Kaligrafi section
+    document.querySelector('.btn-portfolio').addEventListener('click', () => {
+      const kaligrafiSection = document.getElementById('kaligrafi');
+      kaligrafiSection.focus();
+      window.scrollTo({
+        top: kaligrafiSection.offsetTop - 20,
+        behavior: 'smooth'
+      });
+      navLinks.forEach(l => l.classList.remove('active'));
+      document.querySelector('nav a[href="#kaligrafi"]').classList.add('active');
+    });
+
+    // Feedback form submission - will use formsubmit.co for email forwarding
+    const feedbackForm = document.getElementById('feedback-form');
+    const formStatus = document.getElementById('form-status');
+
+    feedbackForm.addEventListener('submit', function(event) {
+      event.preventDefault();
+
+      // Basic form validation
+      if(!feedbackForm.checkValidity()) {
+        formStatus.textContent = "Mohon lengkapi semua bidang dengan benar.";
+        formStatus.style.color = 'crimson';
+        return;
+      }
+      
+      // Using FormSubmit for mailing: https://formsubmit.co/
+      // Replace 'your-email@example.com' with your real email below
+      const actionEmail = "sitiserliaviva@mail.com"; // <-- Set your email here
+
+      // Construct form data
+      const formData = new FormData(feedbackForm);
+
+      fetch(`https://formsubmit.co/ajax/${actionEmail}`, {
+        method: "POST",
+        headers: {
+          'Accept': 'application/json'
+        },
+        body: formData
+      }).then(response => {
+        if(response.ok) {
+          feedbackForm.reset();
+          formStatus.textContent = "Terima kasih atas masukan Anda. Kami akan membalas secepatnya.";
+          formStatus.style.color = '#4a90e2';
+        } else {
+          response.json().then(data => {
+            if(Object.hasOwn(data, 'errors')) {
+              formStatus.textContent = data["errors"].map(error => error.message).join(", ");
+              formStatus.style.color = 'crimson';
+            } else {
+              formStatus.textContent = "Terjadi kesalahan saat mengirim. Silakan coba lagi.";
+              formStatus.style.color = 'crimson';
+            }
+          });
+        }
+      }).catch(() => {
+        formStatus.textContent = "Tidak dapat mengirim form. Periksa koneksi internet Anda.";
+        formStatus.style.color = 'crimson';
+      });
+    });
+  </script>
+</body>
+</html>
+
